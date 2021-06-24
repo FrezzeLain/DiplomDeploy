@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/styles.css">
+    <link rel="stylesheet" href="../assets/icons/flaticon.css">
+    <title>Страница товара</title>
+</head>
+<body>
+    <header class="Main">
+        <div class="container">
+            <div class="top_menu max-width flex align-center justify-center">
+                <div class="flex align-center justify-space-between max-width">
+                    <div class="Logo flex align-center justify-start">
+                        <h1>Posters</h1>
+                    </div>
+                    <div class="Explorer flex align-center justify-space-between">
+                        <div class="flex align-center justify-center">
+                            <i class="flaticon-search-interface-symbol icon-top-menu"></i>
+                        </div>
+                        <input type="text" class="search-input" placeholder="Поиск по каталогу...">
+                    </div>
+                    <div class="icons flex align-center justify-end">
+                        <div class="flex align-center justify-center">
+                            <i class="flaticon-heart icon-top-menu"></i>
+                        </div>
+                        <div class="flex align-center justify-center">
+                            <i class="flaticon-shopping-cart icon-top-menu"></i>
+                        </div>
+                        <div class="flex align-center justify-center">
+                            <i class="flaticon-user icon-top-menu"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="tovar">
+        <div class="container" id="content">
+            <h1>Подробнее о товаре</h1>
+            <div class="flex wrap">
+                <div class="control flex column justify-space-between">
+                    <div class="default flex align-center justify-center" onclick="changeWall(1)"><img src="https://static.displate.com/280x392/displate/2021-03-10/95d65308e5cf7c16fd90c115b68613b8_cf9be0e7e08ce831f0b1051feb5b9e05.jpg" alt=""></div>
+                    <div class="wall" onclick="changeWall(2)"></div>
+                    <div class="wall2" onclick="changeWall(3)"></div>
+                    <div class="wall3" onclick="changeWall(4)"><img src="https://static.displate.com/280x392/displate/2021-03-10/95d65308e5cf7c16fd90c115b68613b8_cf9be0e7e08ce831f0b1051feb5b9e05.jpg" alt=""></div>
+                </div>
+                <div class="left">
+                    <div class="imgcontainer flex align-center justify-center">
+                        <img src="https://static.displate.com/280x392/displate/2021-03-10/95d65308e5cf7c16fd90c115b68613b8_cf9be0e7e08ce831f0b1051feb5b9e05.jpg" alt="">
+                    </div>
+                </div>
+                <div class="right">
+                    <h2>Наименование товара</h2>
+                    <h3>Доступные размеры</h3>
+                    <div class="size flex">
+                        <div class="item size1"><h4>46 | 33</h4></div>
+                        <div class="item size2"><h4>69 | 48</h4></div>
+                        <div class="item size3"><h4>89 | 63</h4></div>
+                    </div>
+                    <h3>Доступные покрытия</h3>
+                    <div class="outer flex">
+                        <div class="item outer1"><h4>Матовое</h4></div>
+                        <div class="item outer2"><h4>Глянцевое</h4></div>
+                    </div>
+                    <div class="buttons">
+                        <button class="contbutton buttonGreen"><i class="flaticon-shopping-cart"></i>В корзину</button>
+                        <button class="contbutton buttonRed"><i class="flaticon-heart"></i>В желаемое</button>
+                    </div>
+                </div>
+                <div class="collection">
+                    <h1>Из этой коллекции</h1>
+                    <div class="slider flex justify-space-between">
+                        <div class="block"></div>
+                        <div class="block"></div>
+                        <div class="block"></div>
+                        <div class="block"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footerMain">
+        <div class="container flex justify-space-between column">
+            <div class="flex justify-space-between">   
+                <div class="PartnersFooter">
+                    <h2 class="h2Footer">Партнеры</h2>
+                    <div class="images flex wrap justify-space-between outsidePartners">
+                        <img src="https://displate.com/img/logotypes/footer/logo_star-wars.svg" alt="">
+                        <img src="https://displate.com/img/logotypes/footer/logo_cyberpunk.svg" alt="">
+                        <img src="https://displate.com/img/logotypes/footer/logo_marvel.svg" alt="">
+                        <img src="https://displate.com/img/logotypes/footer/logo_dc-comics.svg" alt="">
+                        <img src="https://displate.com/img/logotypes/footer/logo_overwatch.svg" alt="">
+                        <img src="https://displate.com/img/logotypes/footer/logo_witcher.svg" alt="">
+                        <img src="https://displate.com/img/logotypes/footer/logo_kingdom-come.svg" alt="">
+                        <img src="https://displate.com/img/logotypes/footer/logo_world-of-tanks.svg" alt="">
+                        <img src="https://displate.com/img/logotypes/footer/logo_dying-light-2.png" alt="">
+                        <img src="" alt="">
+                    </div>
+                </div>
+                <div class="Payments">
+                    <h2 class="h2Footer">Безопасные платежи</h2>
+                    <div>
+                        <img src="https://displate.com/img/svg/footer_payment_processors.svg" alt="">
+                    </div>
+                    <h2 class="h2Footer">Мы в социальных сетях</h2>
+                    <div class="icons">
+                        <i class="flaticon-pinterest"></i>
+                        <i class="flaticon-instagram"></i>
+                        <i class="flaticon-facebook-logo"></i>
+                        <i class="flaticon-twitter"></i>
+                        <i class="flaticon-linkedin"></i>
+                    </div>
+                </div>
+            </div>  
+            <hr class="hrFooter">
+            <h3 class="h3Footer">&copy;Posters. All Rights Reserved.</h3>
+        </div>
+    </footer>
+    <script src="../assets/js/item.js"></script>
+</body>
+</html>

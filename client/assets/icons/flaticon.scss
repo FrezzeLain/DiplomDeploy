@@ -1,0 +1,69 @@
+$flaticon-font: "flaticon";
+
+@font-face {
+    font-family: $flaticon-font;
+    src: url("./flaticon.ttf?816ce8478a8c3c481f874e7867da8612") format("truetype"),
+url("./flaticon.woff?816ce8478a8c3c481f874e7867da8612") format("woff"),
+url("./flaticon.woff2?816ce8478a8c3c481f874e7867da8612") format("woff2"),
+url("./flaticon.eot?816ce8478a8c3c481f874e7867da8612#iefix") format("embedded-opentype"),
+url("./flaticon.svg?816ce8478a8c3c481f874e7867da8612#flaticon") format("svg");
+}
+
+i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
+    font-family: flaticon !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+$flaticon-map: (
+    "eye": "\f101",
+    "linkedin": "\f102",
+    "twitter": "\f103",
+    "facebook-logo": "\f104",
+    "search-interface-symbol": "\f105",
+    "shopping-cart": "\f106",
+    "heart": "\f107",
+    "user": "\f108",
+    "instagram": "\f109",
+    "pinterest": "\f10a",
+    "trash-bin": "\f10b",
+);
+
+.flaticon-eye:before {
+    content: map-get($flaticon-map, "eye");
+}
+.flaticon-linkedin:before {
+    content: map-get($flaticon-map, "linkedin");
+}
+.flaticon-twitter:before {
+    content: map-get($flaticon-map, "twitter");
+}
+.flaticon-facebook-logo:before {
+    content: map-get($flaticon-map, "facebook-logo");
+}
+.flaticon-search-interface-symbol:before {
+    content: map-get($flaticon-map, "search-interface-symbol");
+}
+.flaticon-shopping-cart:before {
+    content: map-get($flaticon-map, "shopping-cart");
+}
+.flaticon-heart:before {
+    content: map-get($flaticon-map, "heart");
+}
+.flaticon-user:before {
+    content: map-get($flaticon-map, "user");
+}
+.flaticon-instagram:before {
+    content: map-get($flaticon-map, "instagram");
+}
+.flaticon-pinterest:before {
+    content: map-get($flaticon-map, "pinterest");
+}
+.flaticon-trash-bin:before {
+    content: map-get($flaticon-map, "trash-bin");
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/styles.css">
+    <link rel="stylesheet" href="../assets/icons/flaticon.css">
+    <title>Каталог</title>
+</head>
+<body>
+    <header class="Main">
+        <div class="container">
+            <div class="top_menu max-width flex align-center justify-center">
+                <div class="flex align-center justify-space-between max-width">
+                    <div class="Logo flex align-center justify-start">
+                        <h1>Posters</h1>
+                    </div>
+                    <div class="Explorer flex align-center justify-space-between">
+                        <div class="flex align-center justify-center">
+                            <i class="flaticon-search-interface-symbol icon-top-menu"></i>
+                        </div>
+                        <input type="text" class="search-input" placeholder="Поиск по каталогу...">
+                    </div>
+                    <div class="icons flex align-center justify-end">
+                        <div class="flex align-center justify-center">
+                            <i class="flaticon-heart icon-top-menu"></i>
+                        </div>
+                        <div class="flex align-center justify-center">
+                            <i class="flaticon-shopping-cart icon-top-menu"></i>
+                        </div>
+                        <div class="flex align-center justify-center">
+                            <i class="flaticon-user icon-top-menu"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="katalog">
+        <div class="container">
+            <h1>Каталог товаров</h1>
+            <div class="content flex">
+                <div class="list flex wrap" id="content"></div>
+                <div class="filters flex column">
+                    <h2>Фильтры</h2>
+                    <div class="flex column-reverse align-start">
+                        <input type="text" id="category" autocomplete="off" oninput="SearchInKatalog()">
+                        <label for="">По Категории</label>
+                    </div>
+                    <div class="flex column-reverse align-start">
+                        <input type="text" id="collection" autocomplete="off" oninput="SearchInKatalog()">
+                        <label for="">По Коллекции</label>
+                    </div>
+                    <div class="flex column-reverse align-start">
+                        <input type="text" id="name" autocomplete="off" oninput="SearchInKatalog()">
+                        <label for="">По Названию</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footerMain">
+        <div class="container flex justify-space-between column">
+            <div class="flex justify-space-between">   
+                <div class="PartnersFooter">
+                    <h2 class="h2Footer">Партнеры</h2>
+                    <div class="images flex wrap justify-space-between outsidePartners">
+                        <img src="https://displate.com/img/logotypes/footer/logo_star-wars.svg" alt="">
+                        <img src="https://displate.com/img/logotypes/footer/logo_cyberpunk.svg" alt="">
+                        <img src="https://displate.com/img/logotypes/footer/logo_marvel.svg" alt="">
+                        <img src="https://displate.com/img/logotypes/footer/logo_dc-comics.svg" alt="">
+                        <img src="https://displate.com/img/logotypes/footer/logo_overwatch.svg" alt="">
+                        <img src="https://displate.com/img/logotypes/footer/logo_witcher.svg" alt="">
+                        <img src="https://displate.com/img/logotypes/footer/logo_kingdom-come.svg" alt="">
+                        <img src="https://displate.com/img/logotypes/footer/logo_world-of-tanks.svg" alt="">
+                        <img src="https://displate.com/img/logotypes/footer/logo_dying-light-2.png" alt="">
+                        <img src="" alt="">
+                    </div>
+                </div>
+                <div class="Payments">
+                    <h2 class="h2Footer">Безопасные платежи</h2>
+                    <div>
+                        <img src="https://displate.com/img/svg/footer_payment_processors.svg" alt="">
+                    </div>
+                    <h2 class="h2Footer">Мы в социальных сетях</h2>
+                    <div class="icons">
+                        <i class="flaticon-pinterest"></i>
+                        <i class="flaticon-instagram"></i>
+                        <i class="flaticon-facebook-logo"></i>
+                        <i class="flaticon-twitter"></i>
+                        <i class="flaticon-linkedin"></i>
+                    </div>
+                </div>
+            </div>  
+            <hr class="hrFooter">
+            <h3 class="h3Footer">&copy;Posters. All Rights Reserved.</h3>
+        </div>
+    </footer>
+    <script src="../assets/js/katalog.js"></script>
+</body>
+</html>
