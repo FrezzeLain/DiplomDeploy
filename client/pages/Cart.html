@@ -17,7 +17,7 @@
             <div class="top_menu max-width flex align-center justify-center">
                 <div class="flex align-center justify-space-between max-width">
                     <div class="Logo flex align-center justify-start">
-                        <h1>Posters</h1>
+                        <a href="/"><h1>Posters</h1></a>
                     </div>
                     <div class="Explorer flex align-center justify-space-between">
                         <div class="flex align-center justify-center">
@@ -45,20 +45,20 @@
         <div class="container">
             <h1>Ваша корзина</h1>
             <div class="content flex">
-                <div class="list flex wrap justify-space-between">
+                <div class="list flex wrap" id="Content">
                     <div class="product flex wrap">
                         <div class="image"></div>
                         <div class="details flex column justify-space-between">
                             <h2>Тип покрытия</h2>
                             <div class="flex param">
-                                <div class="choice"></div>
-                                <div class="choice"></div>
+                                <div class="choice active flex justify-center align-center"><h4>Матовое</h4></div>
+                                <div class="choice flex justify-center align-center"><h4>Глянцевое</h4></div>
                             </div>
                             <h2>Размер</h2>
-                            <div class="flex param">
-                                <div class="choice"></div>
-                                <div class="choice"></div>
-                                <div class="choice"></div>
+                            <div class="flex param sizes">
+                                <div class="choice active flex justify-center align-center"><h4>46 | 33</h4></div>
+                                <div class="choice flex justify-center align-center"><h4>69 | 48</h4></div>
+                                <div class="choice flex justify-center align-center"><h4>89 | 63</h4></div>
                             </div>
                             <div class="buttons flex align-end justify-end">
                                 <button class="buttonRed"><i class="flaticon-trash-bin" title="Удалить из корзины"></i></button>
@@ -68,7 +68,8 @@
                 </div>
                 <div class="results">
                     <h2>Список товаров: </h2>
-                    <h2>Итоговая цена: </h2>
+                    <div class="products" id="mini"></div>
+                    <h2 id="lastPrice">Итоговая цена: </h2>
                     <button class="doIt">Купить</button>
                 </div>
             </div>
@@ -111,5 +112,6 @@
             <h3 class="h3Footer">&copy;Posters. All Rights Reserved.</h3>
         </div>
     </footer>
+    <script src="../assets/js/Cart.js"></script>
 </body>
 </html>

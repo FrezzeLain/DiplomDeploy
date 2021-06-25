@@ -124,4 +124,16 @@ Requests.updateFavoriteList = (userId, newList) => {
     })
 };
 
+Requests.CartByUser = (id) => {
+    const flags = [id];
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT users.cartlist FROM users WHERE users.id = ?", flags, (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    })
+};
+
 module.exports = Requests;

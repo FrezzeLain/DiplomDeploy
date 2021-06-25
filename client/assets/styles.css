@@ -99,6 +99,11 @@ body{
     position: relative;
 }
 
+.Main a {
+    text-decoration: none;
+    color: black;
+}
+
 .h2Main {
     font-size: var(--h2-main-font-size);
     font-family: var(--Cormorand-font);
@@ -405,6 +410,11 @@ body{
     padding-bottom: 50px;
 }
 
+.AboutHead a {
+    text-decoration: none;
+    color: black;
+}
+
 .AboutHead .Logo {
     font-family: var(--Dancing-font);
     font-size: 60px;
@@ -481,6 +491,7 @@ body{
     width: 40%;
     height: 30vh;
     padding: 3px 3px 0 3px;
+    margin-right: 50px;
 }
 
 .CartSection .product .image {
@@ -530,6 +541,26 @@ body{
     padding: 0 0 5px 10px;
 }
 
+.CartSection .products {
+    padding: 0 0 20px 20px;
+}
+
+.CartSection .results h3 {
+    font-family: var(--Cormorand-font);
+    font-size: 20px;
+    padding: 2px 0 2px 15px;
+    font-weight: 100;
+}
+
+.CartSection .results h3:first-child {
+    padding: 2px 0 2px 0;
+    font-weight: 600;
+}
+
+.CartSection .Size, .CartSection .Price {
+    font-family: serif;
+}
+
 .doIt {
     background-color: #2ecc71;
     border: none;
@@ -545,8 +576,28 @@ body{
 .CartSection .choice {
     width: 6vh;
     height: 6vh;
-    background-color: black;
     margin-right: 2px;
+    background-color: white;
+    box-shadow: 0px 0px 1px black;
+    transform: scale(1);
+    transition: 0.2s linear;
+}
+
+.CartSection .active{
+    background-color: #2ecc71;
+}
+
+.CartSection .active h4{
+    transform: rotate(30deg);
+}
+
+.CartSection .choice h4{
+    font-family: var(--Cormorand-font);
+    font-size: 16px;
+}
+
+.CartSection .sizes h4 {
+    font-family: serif;
 }
 
 .CartSection .param {
@@ -875,6 +926,10 @@ body{
 
 .buttonGreen:hover {
     background-color: #2ecc71;
+}
+
+.buttonGreen {
+    background-color: white;
 }
 
 .buttonRed {

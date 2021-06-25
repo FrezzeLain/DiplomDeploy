@@ -125,6 +125,17 @@ app.post('/updateFavoriteList', async(req, res) => {
     }
 });
 
+app.post('/CartByUser', async(req, res) => {
+    try {
+        let {...bodyData} = req.body;
+        let results = await DATABASE.CartByUser(bodyData.id);
+        res.json(results);
+    } catch (e) {
+        console.log(e);
+    }
+});
+
+
 
 app.listen(3000, () => {
     console.log('Server has been started on port: 3000');
