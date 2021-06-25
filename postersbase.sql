@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 24 2021 г., 08:25
+-- Время создания: Июн 25 2021 г., 12:37
 -- Версия сервера: 8.0.15
 -- Версия PHP: 7.3.9
 
@@ -63,9 +63,9 @@ CREATE TABLE `news` (
 
 INSERT INTO `news` (`id`, `Title`, `Type`, `Description`, `Image`, `Href`) VALUES
 (1, '-', 'Main', '-', '../assets/images/news/mainNew1.jpg', ''),
-(2, 'Категория \"Hunter X Hunter\"', 'Secondary', 'Была добавлена коллекция \"Hunter X Hunter\"', '../assets/images/news/secNew1.jpg', '/New/Category/2'),
-(3, 'Категория \"Kyojuro Rengoku\"', 'Secondary', 'Была добавлена коллекция \"Kyojuro Rengoku\"', '../assets/images/news/secNew2.jpg', '/New/Category/1'),
-(4, 'Коллекция \"Wild Nature\"', 'Secondary', 'Была добавлена коллекция \"Wild Nature\"', '../assets/images/news/secNew3.jpg', '');
+(2, 'Категория \"Hunter X Hunter\"', 'Secondary', 'Была добавлена коллекция \"Hunter X Hunter\"', '../assets/images/news/secNew1.jpg', '/Katalog'),
+(3, 'Категория \"Kyojuro Rengoku\"', 'Secondary', 'Была добавлена коллекция \"Kyojuro Rengoku\"', '../assets/images/news/secNew2.jpg', '/Katalog'),
+(4, 'Коллекция \"Wild Nature\"', 'Secondary', 'Была добавлена коллекция \"Wild Nature\"', '../assets/images/news/secNew3.jpg', '/Katalog');
 
 -- --------------------------------------------------------
 
@@ -212,7 +212,7 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT для таблицы `posters`
 --
 ALTER TABLE `posters`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
