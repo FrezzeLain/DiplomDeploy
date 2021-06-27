@@ -20,7 +20,7 @@
                         <div class="flex align-center justify-center">
                             <i class="flaticon-search-interface-symbol icon-top-menu"></i>
                         </div>
-                        <input type="text" class="search-input" placeholder="Чего желаете?">
+                        <input type="text" id="search" class="search-input" placeholder="Перейти в каталог" autocomplete="off">
                     </div>
                     <div class="icons flex align-center justify-end">
                         <div class="flex align-center justify-center">
@@ -29,8 +29,10 @@
                         <div class="flex align-center justify-center">
                             <a href="/Cart"><i class="flaticon-shopping-cart icon-top-menu"></i></a>
                         </div>
-                        <div class="flex align-center justify-center">
-                            <a href="/Auth"><i class="flaticon-user icon-top-menu"></i></a>
+                        <div class="flex align-center justify-center relative">
+                            <i class="flaticon-user icon-top-menu" id="user"></i>
+                            <div class="userOptions" id="userOptions">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -38,7 +40,6 @@
             <div class="bottom_menu flex relative">
                 <div class="container flex justify-space-between align-center relative" id="MenuHover">
                     <h2 class="h2Menu HoverElement">Главная</h2>
-                    <h2 class="h2Menu HoverElement">Коллекции</h2>
                     <a href="/AboutCompany"><h2 class="h2Menu HoverElement">О Нас</h2></a>
                     <a href="/Katalog"><h2 class="h2Menu HoverElement">Каталог</h2></a>
                     <div id="LineMenu"></div>
@@ -67,19 +68,19 @@
                     <img src="https://displate.com/img/logotypes/footer/logo_star-wars.svg" alt="">
                 </div>
                 <div class="block">
-                    <img src="https://displate.com/img/logotypes/footer/logo_star-wars.svg" alt="">
+                    <img src="https://displate.com/img/logotypes/footer/logo_cyberpunk.svg" alt="">
                 </div>
                 <div class="block">
-                    <img src="https://displate.com/img/logotypes/footer/logo_star-wars.svg" alt="">
+                    <img src="https://displate.com/img/logotypes/footer/logo_marvel.svg" alt="">
                 </div>
                 <div class="block">
-                    <img src="https://displate.com/img/logotypes/footer/logo_star-wars.svg" alt="">
+                    <img src="https://displate.com/img/logotypes/footer/logo_dc-comics.svg" alt="">
                 </div>
                 <div class="block">
-                    <img src="https://displate.com/img/logotypes/footer/logo_star-wars.svg" alt="">
+                    <img src="https://displate.com/img/logotypes/footer/logo_overwatch.svg" alt="">
                 </div>
                 <div class="block">
-                    <img src="https://displate.com/img/logotypes/footer/logo_star-wars.svg" alt="">
+                    <img src="https://displate.com/img/logotypes/footer/logo_witcher.svg" alt="">
                 </div>
                 <div class="arrow left">
 
@@ -103,10 +104,6 @@
                         <img src="https://displate.com/img/logotypes/footer/logo_dc-comics.svg" alt="">
                         <img src="https://displate.com/img/logotypes/footer/logo_overwatch.svg" alt="">
                         <img src="https://displate.com/img/logotypes/footer/logo_witcher.svg" alt="">
-                        <img src="https://displate.com/img/logotypes/footer/logo_kingdom-come.svg" alt="">
-                        <img src="https://displate.com/img/logotypes/footer/logo_world-of-tanks.svg" alt="">
-                        <img src="https://displate.com/img/logotypes/footer/logo_dying-light-2.png" alt="">
-                        <img src="" alt="">
                     </div>
                 </div>
                 <div class="Payments">
@@ -128,6 +125,10 @@
             <h3 class="h3Footer">&copy;Posters. All Rights Reserved.</h3>
         </div>
     </footer>
+    <div class="message hidden" id="message">
+        <h2></h2>
+        <button></button>
+    </div>
     <script src="./assets/js/index.js"></script>
 </body>
 </html>

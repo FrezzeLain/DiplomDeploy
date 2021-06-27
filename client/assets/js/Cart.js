@@ -35,15 +35,32 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var CONTENT = document.getElementById('Content');
-var USER_ID = 1;
+var USER_ID = Number(localStorage.getItem('USER_ID'));
+var rightBlock = document.getElementById('res');
 var USER_CART_LIST = [];
 var DEFAULT_PRICE = 3200;
+var MessageBlock = document.getElementById('message');
 var ITEMS_LIST = [];
+var CART_LIST = [];
+var FAV_LIST = [];
 var ResultPrice = document.getElementById('lastPrice');
 var RESULT_PTICE = 0;
 var MINI_PRICE = document.getElementById('mini');
+var search = document.getElementById('search');
+search.addEventListener('click', function () {
+    document.location.href = '/Katalog';
+});
+var user = document.getElementById('user');
+var userOptions = document.getElementById('userOptions');
+var toggled = false;
+var BuyButton = document.getElementById('buy');
 window.addEventListener('load', function () {
-    loadCart();
+    if (USER_ID) {
+        loadCart();
+    }
+    else {
+        document.location.href = '/Auth';
+    }
 });
 function loadCart() {
     return __awaiter(this, void 0, void 0, function () {
@@ -65,23 +82,33 @@ function loadCart() {
             })
                 .then(function (data) {
                 USER_CART_LIST = data[0].cartlist.split(',');
-                USER_CART_LIST.forEach(function (element) {
-                    var id = Number(element);
-                    fetch('/getFavoriteByID', {
-                        method: 'POST',
-                        headers: {
-                            'Content-type': 'application/json'
-                        },
-                        body: JSON.stringify({ id: id })
-                    })
-                        .then(function (resolve) {
-                        return resolve.json();
-                    })
-                        .then(function (data) {
-                        createElement(data[0]);
-                        ResultPrice.innerText = "\u0418\u0442\u043E\u0433\u043E\u0432\u0430\u044F \u0446\u0435\u043D\u0430: " + RESULT_PTICE + " \u20BD";
+                if (USER_CART_LIST[0] == '') {
+                    var h2 = document.createElement('h2');
+                    h2.innerText = "\u0412\u0430\u0448\u0430 \u043A\u043E\u0440\u0437\u0438\u043D\u0430 \u043F\u0443\u0441\u0442\u0430, \u0434\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u0442\u043E\u0432\u0430\u0440.";
+                    h2.className = "h2Clear";
+                    CONTENT.append(h2);
+                    rightBlock.innerHTML = '';
+                    rightBlock.style.border = "none";
+                }
+                else {
+                    USER_CART_LIST.forEach(function (element) {
+                        var id = Number(element);
+                        fetch('/getFavoriteByID', {
+                            method: 'POST',
+                            headers: {
+                                'Content-type': 'application/json'
+                            },
+                            body: JSON.stringify({ id: id })
+                        })
+                            .then(function (resolve) {
+                            return resolve.json();
+                        })
+                            .then(function (data) {
+                            createElement(data[0]);
+                            ResultPrice.innerText = "\u0418\u0442\u043E\u0433\u043E\u0432\u0430\u044F \u0446\u0435\u043D\u0430: " + RESULT_PTICE + " \u20BD";
+                        });
                     });
-                });
+                }
             });
             return [2 /*return*/];
         });
@@ -173,9 +200,16 @@ function createElement(element) {
     Buttons.className = 'buttons flex align-end justify-end';
     var button = document.createElement('button');
     button.className = 'buttonRed';
+    button.dataset.dataBaseId = element.id;
+    button.dataset.itemId = "" + index;
+    button.addEventListener('click', function (ev) {
+        deleteItem(ev.target);
+    });
     var iDelete = document.createElement('i');
     iDelete.className = 'flaticon-trash-bin';
     iDelete.title = 'Удалить из корзины';
+    iDelete.dataset.dataBaseId = element.id;
+    iDelete.dataset.itemId = "" + index;
     Buttons.append(button);
     button.append(iDelete);
     param_2.append(choice3, choice4, choice5);
@@ -294,4 +328,175 @@ function getSize(el) {
     if (el.size == 2)
         return '69 | 48';
     return '89 | 63';
+}
+function deleteItem(item) {
+    return __awaiter(this, void 0, void 0, function () {
+        var BaseId, itemId, index, stringBody;
+        return __generator(this, function (_a) {
+            BaseId = item.dataset.dataBaseId;
+            itemId = item.dataset.itemId;
+            index = USER_CART_LIST.indexOf(BaseId);
+            USER_CART_LIST.splice(index, 1);
+            stringBody = USER_CART_LIST.join();
+            fetch('/updateCard', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({ cartList: stringBody, user: USER_ID })
+            }).then(function () {
+                loadCart();
+                ITEMS_LIST = [];
+                getFullPrice();
+            });
+            return [2 /*return*/];
+        });
+    });
+}
+user.addEventListener('click', function () {
+    if (USER_ID) {
+        if (toggled) {
+            userOptions.style.display = 'none';
+            toggled = !toggled;
+        }
+        else {
+            userOptions.innerHTML = "";
+            userOptions.style.display = "block";
+            var Cabinet = document.createElement('h2');
+            Cabinet.innerText = "\u0421\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u0437\u0430\u043A\u0430\u0437\u043E\u0432";
+            userOptions.append(Cabinet);
+            Cabinet.addEventListener('click', function () {
+                document.location.href = "/Cabinet";
+            });
+            var Exit = document.createElement('h2');
+            Exit.innerText = 'Выйти';
+            userOptions.append(Exit);
+            Exit.addEventListener('click', function () {
+                localStorage.setItem('USER_ID', '0');
+                FAV_LIST.length = 0;
+                CART_LIST.length = 0;
+                document.location.href = "/";
+            });
+            toggled = !toggled;
+        }
+    }
+    else {
+        document.location.href = "/Auth";
+    }
+});
+BuyButton.addEventListener('click', function () {
+    var id = Date.now().toString();
+    var price = RESULT_PTICE;
+    var user = USER_ID;
+    var mail;
+    fetch('/getUserById', {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify({ id: USER_ID })
+    })
+        .then(function (resolve) {
+        return resolve.json();
+    })
+        .then(function (data) {
+        mail = data[0].mail;
+        fetch('/addOrder', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({ id: id, price: price, user: user })
+        })
+            .then(function (resolve) {
+            return resolve.json();
+        })
+            .then(function (data) {
+            fetch('/sendMail', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({ id: id, mail: mail })
+            });
+            var newList = '';
+            fetch('/updateCard', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({ cartList: newList, user: USER_ID })
+            })
+                .then(function (resolve) {
+                return resolve.json();
+            })
+                .then(function (data) {
+                CART_LIST = newList.split(',');
+                loadCart();
+                showMessage(6);
+            });
+        });
+    });
+});
+function showMessage(state) {
+    MessageBlock.classList.remove('hidden');
+    switch (state) {
+        case 1:
+            MessageBlock.childNodes[1].textContent = 'Товар удалён из списка желаемого';
+            MessageBlock.childNodes[3].style.display = 'none';
+            if (MessageBlock.classList.contains('ActiveMS')) {
+                alert();
+                MessageBlock.classList.remove('ActiveMS');
+                MessageBlock.classList.add('ActiveMS');
+            }
+            else {
+                MessageBlock.classList.add('ActiveMS');
+            }
+            break;
+        case 2:
+            MessageBlock.childNodes[1].textContent = 'Товар уже есть в вашем списке желаемого';
+            MessageBlock.childNodes[3].style.display = 'none';
+            MessageBlock.style.opacity = "1";
+            MessageBlock.style.transition = '1s linear';
+            setTimeout(function () {
+                MessageBlock.style.opacity = '0';
+            }, 3000);
+            break;
+        case 3:
+            MessageBlock.childNodes[1].textContent = 'Товар добавлен в ваш список желаемого';
+            MessageBlock.childNodes[3].style.display = 'none';
+            MessageBlock.style.opacity = "1";
+            MessageBlock.style.transition = '1s linear';
+            setTimeout(function () {
+                MessageBlock.style.opacity = '0';
+            }, 3000);
+            break;
+        case 4:
+            MessageBlock.childNodes[1].textContent = 'Товар уже есть в вашей корзине';
+            MessageBlock.childNodes[3].style.display = 'none';
+            MessageBlock.style.opacity = "1";
+            MessageBlock.style.transition = '1s linear';
+            setTimeout(function () {
+                MessageBlock.style.opacity = '0';
+            }, 3000);
+            break;
+        case 5:
+            MessageBlock.childNodes[1].textContent = 'Товар добавлен в корзину';
+            MessageBlock.childNodes[3].style.display = 'none';
+            MessageBlock.style.opacity = "1";
+            MessageBlock.style.transition = '1s linear';
+            setTimeout(function () {
+                MessageBlock.style.opacity = '0';
+            }, 3000);
+            break;
+        case 6:
+            MessageBlock.childNodes[1].textContent = 'Заказ добален на страницу заказов';
+            MessageBlock.childNodes[3].style.display = 'none';
+            MessageBlock.style.opacity = "1";
+            MessageBlock.style.transition = '1s linear';
+            setTimeout(function () {
+                MessageBlock.style.opacity = '0';
+            }, 3000);
+            break;
+    }
 }

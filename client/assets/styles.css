@@ -363,6 +363,16 @@ body{
     font-weight: 100;
 }
 
+.auth h3 {
+    font-family: var(--Cormorand-font);
+    font-size: 18px;
+    color: white;
+    font-weight: 100;
+    padding-top: 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
 .auth .form {
     width: 800px;
     height: 400px;
@@ -492,6 +502,7 @@ body{
     height: 30vh;
     padding: 3px 3px 0 3px;
     margin-right: 50px;
+    margin-bottom: 30px;
 }
 
 .CartSection .product .image {
@@ -606,6 +617,29 @@ body{
 
 /* Favorite */
 
+.message {
+    position: fixed;
+    right: 5px;
+    top: 90px;
+    padding: 20px 50px;
+    background-color: rgba(52, 73, 94,1.0);
+}
+
+.message h2 {
+    font-family: var(--Cormorand-font);
+    font-size: 24px;
+    font-weight: 100;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+.ActiveMS {
+    animation: hide 3s linear forwards;
+}
+
 .YourSection {
     padding-top: 30px;
     min-height: 70vh;
@@ -617,6 +651,32 @@ body{
     font-size: 30px;
     text-transform: uppercase;
     font-weight: 100;
+}
+
+.Orders h1 {
+    padding: 30px 0 30px 15px;
+    font-family: var(--Cormorand-font);
+    font-size: 30px;
+    text-transform: uppercase;
+    font-weight: 100;
+}
+
+.Orders h3 {
+    padding: 10px 0 0 0;
+    font-family: var(--Cormorand-font);
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 100;
+}
+
+.Orders .content {
+    min-height: 60vh;
+}
+
+.Orders .item {
+    background-color: #2ecc71;
+    padding: 15px;
+    margin-right: 15px;
 }
 
 /* Katalog */
@@ -938,4 +998,36 @@ body{
 
 .buttonRed:hover {
     background-color: #e74c3c;
+}
+
+@keyframes hide {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.userOptions {
+    position: absolute;
+    right: 0;
+    top: 30px;
+    min-width: 10vw;
+    display: none;
+    z-index: 100;
+}
+
+.userOptions h2 {
+    font-family: var(--Cormorand-font);
+    font-size: 24px;
+    padding: 5px 0 5px 15px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.h2Clear {
+    font-family: var(--Cormorand-font);
+    font-weight: 400;
+    padding: 30px 0 0 30px;
 }

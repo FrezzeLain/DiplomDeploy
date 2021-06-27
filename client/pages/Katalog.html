@@ -16,21 +16,17 @@
                     <div class="Logo flex align-center justify-start">
                         <a href="/"><h1>Posters</h1></a>
                     </div>
-                    <div class="Explorer flex align-center justify-space-between">
-                        <div class="flex align-center justify-center">
-                            <i class="flaticon-search-interface-symbol icon-top-menu"></i>
-                        </div>
-                        <input type="text" class="search-input" placeholder="Поиск по каталогу...">
-                    </div>
                     <div class="icons flex align-center justify-end">
                         <div class="flex align-center justify-center">
-                            <i class="flaticon-heart icon-top-menu"></i>
+                            <a href="/Favorite"><i class="flaticon-heart icon-top-menu"></i></a>
                         </div>
                         <div class="flex align-center justify-center">
-                            <i class="flaticon-shopping-cart icon-top-menu"></i>
+                            <a href="/Cart"><i class="flaticon-shopping-cart icon-top-menu"></i></a>
                         </div>
-                        <div class="flex align-center justify-center">
-                            <i class="flaticon-user icon-top-menu"></i>
+                        <div class="flex align-center justify-center relative">
+                            <i class="flaticon-user icon-top-menu" id="user"></i>
+                            <div class="userOptions" id="userOptions">
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -72,10 +68,6 @@
                         <img src="https://displate.com/img/logotypes/footer/logo_dc-comics.svg" alt="">
                         <img src="https://displate.com/img/logotypes/footer/logo_overwatch.svg" alt="">
                         <img src="https://displate.com/img/logotypes/footer/logo_witcher.svg" alt="">
-                        <img src="https://displate.com/img/logotypes/footer/logo_kingdom-come.svg" alt="">
-                        <img src="https://displate.com/img/logotypes/footer/logo_world-of-tanks.svg" alt="">
-                        <img src="https://displate.com/img/logotypes/footer/logo_dying-light-2.png" alt="">
-                        <img src="" alt="">
                     </div>
                 </div>
                 <div class="Payments">
@@ -97,6 +89,10 @@
             <h3 class="h3Footer">&copy;Posters. All Rights Reserved.</h3>
         </div>
     </footer>
+    <div class="message hidden" id="message">
+        <h2></h2>
+        <button></button>
+    </div>
     <script src="../assets/js/katalog.js"></script>
 </body>
 </html>

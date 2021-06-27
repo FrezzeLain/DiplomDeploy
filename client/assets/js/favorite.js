@@ -35,10 +35,51 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var FAVORITE_BLOCK = document.getElementById('favorite');
-var USER_ID = 1;
+var MessageBlock = document.getElementById('message');
+var search = document.getElementById('search');
+var FAV_LIST = [];
+var CART_LIST = [];
+search.addEventListener('click', function () {
+    document.location.href = '/Katalog';
+});
+var USER_ID = Number(localStorage.getItem('USER_ID'));
 var USER_FAVORITE_LIST = null;
+var user = document.getElementById('user');
+var userOptions = document.getElementById('userOptions');
+var toggled = false;
 window.addEventListener('load', function () {
-    getFavoriteList();
+    if (USER_ID) {
+        getFavoriteList();
+        fetch('/CartByUser', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({ id: USER_ID })
+        })
+            .then(function (resolve) {
+            return resolve.json();
+        })
+            .then(function (data) {
+            CART_LIST = data[0].cartlist.split(',');
+        });
+        fetch('/getFavoriteList', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({ id: USER_ID })
+        })
+            .then(function (resolve) {
+            return resolve.json();
+        })
+            .then(function (data) {
+            FAV_LIST = data[0].likelist.split(',');
+        });
+    }
+    else {
+        document.location.href = "/Auth";
+    }
 });
 function getFavoriteList() {
     return __awaiter(this, void 0, void 0, function () {
@@ -58,6 +99,12 @@ function getFavoriteList() {
                 return response.json();
             }).then(function (data) {
                 USER_FAVORITE_LIST = data[0].likelist.split(',');
+                if (USER_FAVORITE_LIST[0] == '') {
+                    var h2 = document.createElement('h2');
+                    h2.innerText = "\u0412\u0430\u0448 \u0441\u043F\u0438\u0441\u043E\u043A \u0436\u0435\u043B\u0430\u0435\u043C\u043E\u0433\u043E \u043F\u0443\u0441\u0442, \u0434\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u0442\u043E\u0432\u0430\u0440.";
+                    h2.className = "h2Clear";
+                    FAVORITE_BLOCK.append(h2);
+                }
                 USER_FAVORITE_LIST.forEach(function (element) {
                     var FavId = Number(element);
                     var FavBody = {
@@ -83,7 +130,7 @@ function getFavoriteList() {
 function createElement(element) {
     var divItem = document.createElement('div');
     divItem.className = 'item';
-    divItem.dataset.elementId = element.id;
+    divItem.dataset.elementId = "" + element.id;
     divItem.addEventListener('click', function () {
         document.location.href = "/AboutItem/" + element.id;
     });
@@ -95,18 +142,24 @@ function createElement(element) {
     divButtons.className = 'buttons flex justify-center';
     var buttonRed = document.createElement('button');
     buttonRed.className = 'buttonRed';
-    buttonRed.dataset.elementId = element.id;
+    buttonRed.dataset.elementId = "" + element.id;
     buttonRed.addEventListener('click', function (e) {
         e.stopPropagation();
         updateFavoriteList(e.target);
     });
     var iHeart = document.createElement('i');
     iHeart.className = 'flaticon-heart';
-    iHeart.dataset.elementId = element.id;
+    iHeart.dataset.elementId = "" + element.id;
     var buttonGreen = document.createElement('button');
     buttonGreen.className = 'buttonGreen';
+    buttonGreen.dataset.baseId = "" + element.id;
+    buttonGreen.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        updateCard(ev.target);
+    });
     var iCart = document.createElement('i');
     iCart.className = 'flaticon-shopping-cart';
+    iCart.dataset.baseId = "" + element.id;
     buttonGreen.append(iCart);
     buttonRed.append(iHeart);
     divButtons.append(buttonGreen, buttonRed);
@@ -133,8 +186,128 @@ function updateFavoriteList(target) {
                 body: JSON.stringify(bodyData)
             }).then(function () {
                 getFavoriteList();
+                showMessage(1);
             });
             return [2 /*return*/];
         });
     });
 }
+function updateCard(element) {
+    return __awaiter(this, void 0, void 0, function () {
+        var Id, newList_1;
+        return __generator(this, function (_a) {
+            Id = String(element.dataset.baseId);
+            if (CART_LIST.includes(Id)) {
+                showMessage(4);
+            }
+            else {
+                if (CART_LIST[0] == '') {
+                    CART_LIST.length = 0;
+                    newList_1 = CART_LIST.join() + ("" + Id);
+                }
+                else {
+                    newList_1 = CART_LIST.join() + ("," + Id);
+                }
+                fetch('/updateCard', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({ cartList: newList_1, user: USER_ID })
+                })
+                    .then(function (resolve) {
+                    return resolve.json();
+                })
+                    .then(function (data) {
+                    CART_LIST = newList_1.split(',');
+                    showMessage(5);
+                });
+            }
+            return [2 /*return*/];
+        });
+    });
+}
+function showMessage(state) {
+    MessageBlock.classList.remove('hidden');
+    switch (state) {
+        case 1:
+            MessageBlock.childNodes[1].textContent = 'Товар удалён из списка желаемого';
+            MessageBlock.childNodes[3].style.display = 'none';
+            if (MessageBlock.classList.contains('ActiveMS')) {
+                alert();
+                MessageBlock.classList.remove('ActiveMS');
+                MessageBlock.classList.add('ActiveMS');
+            }
+            else {
+                MessageBlock.classList.add('ActiveMS');
+            }
+            break;
+        case 2:
+            MessageBlock.childNodes[1].textContent = 'Товар уже есть в вашем списке желаемого';
+            MessageBlock.childNodes[3].style.display = 'none';
+            MessageBlock.style.opacity = "1";
+            MessageBlock.style.transition = '1s linear';
+            setTimeout(function () {
+                MessageBlock.style.opacity = '0';
+            }, 3000);
+            break;
+        case 3:
+            MessageBlock.childNodes[1].textContent = 'Товар добавлен в ваш список желаемого';
+            MessageBlock.childNodes[3].style.display = 'none';
+            MessageBlock.style.opacity = "1";
+            MessageBlock.style.transition = '1s linear';
+            setTimeout(function () {
+                MessageBlock.style.opacity = '0';
+            }, 3000);
+            break;
+        case 4:
+            MessageBlock.childNodes[1].textContent = 'Товар уже есть в вашей корзине';
+            MessageBlock.childNodes[3].style.display = 'none';
+            MessageBlock.style.opacity = "1";
+            MessageBlock.style.transition = '1s linear';
+            setTimeout(function () {
+                MessageBlock.style.opacity = '0';
+            }, 3000);
+            break;
+        case 5:
+            MessageBlock.childNodes[1].textContent = 'Товар добавлен в корзину';
+            MessageBlock.childNodes[3].style.display = 'none';
+            MessageBlock.style.opacity = "1";
+            MessageBlock.style.transition = '1s linear';
+            setTimeout(function () {
+                MessageBlock.style.opacity = '0';
+            }, 3000);
+            break;
+    }
+}
+user.addEventListener('click', function () {
+    if (USER_ID) {
+        if (toggled) {
+            userOptions.style.display = 'none';
+            toggled = !toggled;
+        }
+        else {
+            userOptions.innerHTML = "";
+            userOptions.style.display = "block";
+            var Cabinet = document.createElement('h2');
+            Cabinet.innerText = "\u0421\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u0437\u0430\u043A\u0430\u0437\u043E\u0432";
+            userOptions.append(Cabinet);
+            Cabinet.addEventListener('click', function () {
+                document.location.href = "/Cabinet";
+            });
+            var Exit = document.createElement('h2');
+            Exit.innerText = 'Выйти';
+            userOptions.append(Exit);
+            Exit.addEventListener('click', function () {
+                localStorage.setItem('USER_ID', '0');
+                FAV_LIST.length = 0;
+                CART_LIST.length = 0;
+                document.location.href = "/";
+            });
+            toggled = !toggled;
+        }
+    }
+    else {
+        document.location.href = "/Auth";
+    }
+});

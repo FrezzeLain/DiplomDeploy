@@ -2,8 +2,51 @@ const CURRENT_ITEM = Number(document.location.pathname.substr(11));
 const ITEM_CONTENT = document.getElementById('content');
 let imgContainer: HTMLDivElement;
 let ourImage: HTMLImageElement;
+const MessageBlock = document.getElementById('message');
+const USER_ID = Number(localStorage.getItem('USER_ID'));
+let FAV_LIST = [];
+let CART_LIST = [];
+const search = document.getElementById('search');
+const user = document.getElementById('user');
+const userOptions = document.getElementById('userOptions');
+let toggled = false;
 
-window.addEventListener('load', loadItem);
+search.addEventListener('click', () => {
+    document.location.href = `/Katalog`;
+})
+
+window.addEventListener('load', () => {
+    loadItem();
+    if (USER_ID) {
+        fetch('/CartByUser', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({id: USER_ID})
+        })
+        .then((resolve) => {
+            return resolve.json();
+        })
+        .then((data) => {
+            CART_LIST = data[0].cartlist.split(',')
+        });
+
+        fetch('/getFavoriteList', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({id: USER_ID})
+        })
+        .then((resolve) => {
+            return resolve.json();
+        })
+        .then((data) => {
+            FAV_LIST = data[0].likelist.split(',');
+        })
+    }
+});
 
 async function loadItem() {
     let promise = await fetch(`/Item/${CURRENT_ITEM}`, {
@@ -90,12 +133,22 @@ async function createItem(item) {
     Buttons.className = 'buttons';
     let Button1 = document.createElement('button');
     Button1.className = 'contbutton buttonGreen';
+    Button1.dataset.baseId = `${item.id}`;
+    Button1.addEventListener('click', (ev) => {
+        updateCard(ev.target);
+    })
     let i1 = document.createElement('i');
     i1.className = 'flaticon-shopping-cart';
+    i1.dataset.baseId = `${item.id}`;
     let Button2 = document.createElement('button');
+    Button2.dataset.baseId = `${item.id}`;
+    Button2.addEventListener('click', (ev) => {
+        updateFavorite(ev.target);
+    })
     Button2.className = 'contbutton buttonRed';
     let i2 = document.createElement('i');
     i2.className = 'flaticon-heart';
+    i2.dataset.baseId = `${item.id}`
 
     Button2.append(i2, 'В желаемое');
     Button1.append(i1, 'В корзину');
@@ -200,3 +253,152 @@ function changeWall(id: number) {
         }
     }
 }
+
+async function updateCard(element) {
+    if (USER_ID) {
+        let Id = String(element.dataset.baseId);
+        if (CART_LIST.includes(Id)) {
+            showMessage(4);
+        } else {
+            let newList;
+            if (CART_LIST[0] == '') {
+                CART_LIST.length = 0;
+                newList = CART_LIST.join() + `${Id}`;
+            } else {
+                newList = CART_LIST.join() + `,${Id}`
+            }
+            fetch('/updateCard', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({cartList: newList, user: USER_ID})
+            })
+            .then((resolve) => {
+                return resolve.json();
+            })
+            .then((data) => {
+                CART_LIST = newList.split(',');
+                showMessage(5);
+            })
+        }
+    } else {
+        document.location.href = `/Auth`;
+    }
+}
+
+async function updateFavorite(element) {
+    if(USER_ID) {
+        let Id = String(element.dataset.baseId);
+        if (FAV_LIST.includes(Id)) {
+        showMessage(2);
+        } else {
+            let newList;
+            if (FAV_LIST[0] == '') {
+                FAV_LIST.length = 0;
+                newList = FAV_LIST.join() + `${Id}`;
+            } else {
+                newList = FAV_LIST.join() + `,${Id}`
+            }
+            fetch('/updateFavoriteList', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({userId: USER_ID, newList: newList})
+            })
+            .then((resolve) => {
+                return resolve.json();
+            })
+            .then((data) => {
+                FAV_LIST = newList.split(',');
+                showMessage(3);
+            })
+        }
+    } else {
+        document.location.href = `/Auth`;
+    }
+}
+
+function showMessage(state) {
+    MessageBlock.classList.remove('hidden');
+    switch (state) {
+        case 1:
+            MessageBlock.childNodes[1].textContent = 'Товар удалён из списка желаемого';
+            MessageBlock.childNodes[3].style.display = 'none';
+            if (MessageBlock.classList.contains('ActiveMS')) {
+                alert();
+                MessageBlock.classList.remove('ActiveMS');
+                MessageBlock.classList.add('ActiveMS');
+            } else {
+                MessageBlock.classList.add('ActiveMS');
+            }
+            break;
+        case 2:
+            MessageBlock.childNodes[1].textContent = 'Товар уже есть в вашем списке желаемого';
+            MessageBlock.childNodes[3].style.display = 'none';
+            MessageBlock.style.opacity = `1`;
+            MessageBlock.style.transition = '1s linear';
+            setTimeout(() => {
+                MessageBlock.style.opacity = '0';
+            }, 3000);
+            break;
+        case 3:
+            MessageBlock.childNodes[1].textContent = 'Товар добавлен в ваш список желаемого';
+            MessageBlock.childNodes[3].style.display = 'none';
+            MessageBlock.style.opacity = `1`;
+            MessageBlock.style.transition = '1s linear';
+            setTimeout(() => {
+                MessageBlock.style.opacity = '0';
+            }, 3000);
+            break;
+        case 4:
+            MessageBlock.childNodes[1].textContent = 'Товар уже есть в вашей корзине';
+            MessageBlock.childNodes[3].style.display = 'none';
+            MessageBlock.style.opacity = `1`;
+            MessageBlock.style.transition = '1s linear';
+            setTimeout(() => {
+                MessageBlock.style.opacity = '0';
+            }, 3000);
+            break;
+        case 5:
+            MessageBlock.childNodes[1].textContent = 'Товар добавлен в корзину';
+            MessageBlock.childNodes[3].style.display = 'none';
+            MessageBlock.style.opacity = `1`;
+            MessageBlock.style.transition = '1s linear';
+            setTimeout(() => {
+                MessageBlock.style.opacity = '0';
+            }, 3000);
+            break;
+    }
+}
+
+user.addEventListener('click', () => {
+    if (USER_ID) {
+        if (toggled) {
+            userOptions.style.display = 'none';
+            toggled = !toggled;
+        } else {
+            userOptions.innerHTML = ``;
+            userOptions.style.display = `block`;
+            let Cabinet = document.createElement('h2');
+            Cabinet.innerText = `Страница заказов`;
+            userOptions.append(Cabinet);
+            Cabinet.addEventListener('click', () => {
+                document.location.href = `/Cabinet`;
+            });
+            let Exit = document.createElement('h2');
+            Exit.innerText = 'Выйти';
+            userOptions.append(Exit);
+            Exit.addEventListener('click', () => {
+                localStorage.setItem('USER_ID', '0');
+                FAV_LIST.length = 0;
+                CART_LIST.length = 0;
+                document.location.href = `/`;
+            });
+            toggled = !toggled;
+        }
+    } else {
+        document.location.href = `/Auth`;
+    }
+});

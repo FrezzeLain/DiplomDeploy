@@ -91,7 +91,7 @@ Requests.topItems = () => {
 Requests.getFavoriteList = (id) => {
     const flags = [id];
     return new Promise((resolve, reject) => {
-        connection.query("SELECT users.likelist FROM `users` WHERE ?", flags, (err, results) => {
+        connection.query("SELECT users.likelist FROM `users` WHERE users.id = ?", flags, (err, results) => {
             if (err) {
                 return reject(err);
             }
@@ -135,5 +135,102 @@ Requests.CartByUser = (id) => {
         });
     })
 };
+
+Requests.updateCard = (cartList, user) => {
+    const flags = [cartList, user];
+    return new Promise((resolve, reject) => {
+        connection.query("UPDATE `users` SET users.cartlist = ? WHERE users.id = ?", flags, (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    })
+};
+
+Requests.tryAuth = (login, password) => {
+    const flags = [login, login, password];
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM `users` WHERE (users.login = ? OR users.mail = ?) AND password = ?", flags, (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    })
+};
+
+Requests.getUserByMail = (mail) => {
+    const flags = [mail];
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM `users` WHERE users.mail = ?", flags, (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    })
+};
+
+Requests.getUserById = (id) => {
+    const flags = [id];
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM `users` WHERE users.id = ?", flags, (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    })
+};
+
+Requests.getUserByLogin = (login) => {
+    const flags = [login];
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM `users` WHERE users.login = ?", flags, (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    })
+};
+
+Requests.AddUser = (login, mail, password) => {
+    const flags = [login, mail, password];
+    return new Promise((resolve, reject) => {
+        connection.query("INSERT INTO `users` (`id`, `login`, `mail`, `likelist`, `cartlist`, `password`) VALUES (NULL, ?, ?, '', '', ?)", flags, (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    })
+};
+
+Requests.addOrder = (id, price, user) => {
+    const flags = [id, user, price];
+    return new Promise((resolve, reject) => {
+        connection.query("INSERT INTO `orders` (`id`, `user_id`, `price`, `state`) VALUES (?, ?, ?, 'В очереди')", flags, (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    })
+};
+
+Requests.getOrderList = (id) => {
+    const flags = [id];
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM `orders` WHERE orders.user_id = ?", flags, (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    })
+};
+
 
 module.exports = Requests;
